@@ -1,7 +1,13 @@
 <?php
 include 'conexion/conexion.php';
 ?>
-
+<?php
+    $codigop = $_POST['cog'];
+    $nomprep = $_POST['nombre'];
+    $preciop = $_POST['precio'];
+    $cantidadp = $_POST['cant'];
+    
+    ?>
 
 <!doctype html>
 <html lang="en">
@@ -85,6 +91,32 @@ include 'conexion/conexion.php';
                                 }
                             }
                             ?>
+
+                              <?php
+                                  //Manejo de archivos
+                                  $file = fopen("data.txt","a");
+                                  fwrite($file, $codigop.";".$nombrep.";".$preciop.";".$cantidadp.PHP_EOL);
+                                  fclose($file);
+                              ?>
+                                  <br> <br>
+                                  
+                                  <div class="container" align="center">
+                                      <h3> Cargando información de un archivo </h3>
+                                      <?php
+                                          if (!$file = fopen("data.txt", "r")){
+                                              echo "No se ha podido abrir el archivo";
+                                          }
+                                          else{
+                                              $file = fopen("data.txt", "r");
+                                              while(!feof($file)) {
+                                                  echo fgets($file)."<br>";
+                                              }
+                                              fclose($file);
+                                          }
+
+                                      ?>
+        
+                                  </div>
                             <input class="btn btn-success" type="submit" value="opcion1">
 
                         </form>
@@ -101,7 +133,8 @@ include 'conexion/conexion.php';
             
 
             <div class="col-3">
-                <button type="submit" class="btn btn-primary">Opcion2</button>
+                
+                <button class="btn btn-primary"  onclick="Cantidades()">Opcion2:</button>
 
             </div>
             <div class="col-4">
@@ -119,7 +152,7 @@ include 'conexion/conexion.php';
 
 
 
-    <script type="text/javascript" src="js/functions.js"></script>
+<script type="text/javascript" src="js/functions.js"></script>
 </body>
 <footer class="sticky-footer bg-white">
   <div class="container my-auto">
